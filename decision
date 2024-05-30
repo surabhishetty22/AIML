@@ -54,4 +54,40 @@ def getnextnode(data,attributelist,cocncepts,conceptvals,tree,addto):
                 else:
                     entropyattr[att]=entrophyattr[att]+(totalinfo/total)*infogain                                                             
                           
-    
+     gain={}
+     for g in entrophyattr:
+         gain[g]=classentrophy-entrophyattr[g[
+     node=max(gain,key=gain.get)
+     tree=insertnode(tree,addto,node)
+     for nd in attr[node]:
+        tree=insertnode(tree,node,nd)
+        newdata=data[data[node]==nd].drop(node,axis=1)
+        attributelist=list(newdata_[:-1])
+        tree=getnextnode(newdata,attributelist,concept,cenceptvals,tree,nd)
+    return tree
+
+import pandas as pd
+def main():
+    data=pd.read_csv('PlayTennis.csv')
+    if 'Unnamed:0' in data.columns:
+             data=data.drop('Unnamed:0',axis=1)
+             data=data.drop('slno',axis=1)
+    attributelist=list(data)[:-1]
+    concept=str(list(data)[-1])
+    conceptvals=list(set(data[concept]))
+    tree=getnextnode(data,attributelist,concept,conceptvals,{'root':'None'},'root')
+    return tree
+tree=main()['root']             
+df=pd.read_csv('PlayTennis.csv')     
+def test(tee,d):
+   for k in tree:
+      for v in tree[k]:
+          if (d[k]==v and isinstance(tree[k][v],dict)):
+             test[tree[k][v],d)
+          elif(d[k]==v):
+             print("classification"+tree[k][v])
+if 'Unnamed : 0' in df.columns:
+    df=df.drop('Unnamed:0',axis=1)
+df.head()
+print(tree)
+test(tree,df.loc[0,:])
