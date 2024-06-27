@@ -2,32 +2,31 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn import datasets
 from sklearn.model_selection import train_test_split
-from sklearn.svm import svc
+from sklearn.svm import SVC 
 from sklearn.metrics import accuracy_score
-iris=dataset.load_iris()
-X=iris.data[:,:2]
-y=iris.target
-X=X[y!=2]
-y=y[y!=2]
-X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.2,random_state=42)
-svm_classifier=svc(kenel='linear')
-svm_classifier.fit(X_train,y_train)
-y_pred=svm_classifier.predict(X_test)
-accuracy=accuracy_score(y_test,y_pred)
-print("accuracy",accuracy)
-plt.scatter(X[:,0],X[:,1],c=y,cmap=plt.cm.Paired,edgecolors='K')
-ax=plt.gca()
-xlim=ax.get_xlim()
-ylim=ax.get_ylim()
-xx=np.linspace(xlim[0],xlim[1],30)
-yy=np.linspace(ylim[0],ylim[1],30)
-YY,XX=np.meshgrid(yy,xx)
-xy=np.vstaxk(XX.rarel(),XY.ravel[1]).T
-Z=svm_classifier.decision_function(xy).reshape(XX.shape)
-ax.contour(XX,YY,Z,colors='K',levels=[-1,0,1],alpha=0.5,linestyle['--','-','--'])
-ax.scatter(svm-classifier.support_vectors_[:,0],svm_classifier.support_vectors[:,-1],s=100,lenewidth=1,facecolors='none',
-           edgecolors='k')
-plt.xlabel('feature 1')
-plt/ylabel('feature 2')
-plt.title('svm binary classifier')
+iris = datasets.load_iris()
+X = iris.data[:, :2]  
+y = iris.target
+X = X[y != 2]
+y = y[y != 2]
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+svm_classifier = SVC(kernel='linear')
+svm_classifier.fit(X_train, y_train)
+y_pred = svm_classifier.predict(X_test)
+accuracy = accuracy_score(y_test, y_pred)
+print("Accuracy:", accuracy)
+plt.figure(figsize=(8, 6))
+h = 0.02  
+x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1
+y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1
+xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
+Z = svm_classifier.decision_function(np.c_[xx.ravel(), yy.ravel()])
+Z = Z.reshape(xx.shape)
+plt.contour(xx, yy, Z, colors='k', levels=[-1, 0, 1], alpha=0.5, linestyles=['--', '-', '--'])
+plt.scatter(svm_classifier.support_vectors_[:, 0], svm_classifier.support_vectors_[:, 1],
+            s=100, linewidth=1, facecolors='none', edgecolors='k')
+plt.scatter(X[:, 0], X[:, 1], c=y, cmap=plt.cm.Paired, edgecolors='k')
+plt.xlabel('Feature 1')
+plt.ylabel('Feature 2')
+plt.title('SVM Binary Classifier')
 plt.show()
